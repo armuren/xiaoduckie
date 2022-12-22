@@ -16,7 +16,11 @@ namespace xiaoduckie {
 namespace sensors {
 
 /*!
- * @brief This class manages the WheelEncoder sensor connected to the GPIO
+ * @brief This is the ROS2 Node that publishes the encoder messages.
+ * It is constructed with an std::vector of WheelEncodersNode::WheelEncoderConfig
+ * objects and creates an instance of a WheelEncoderSensor for each, then assigns
+ * to each its own callback using a lambda function.  The lambda function publishes
+ * the encoder value.
  * @ingroup Sensors
  */
 class WheelEncodersNode : public rclcpp::Node {
@@ -24,6 +28,10 @@ class WheelEncodersNode : public rclcpp::Node {
   typedef rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr PublisherPtr;
   
   public:
+    /*!
+      * @brief This Struct holds the config for each WheelEncoderSensor
+      * @ingroup Sensors
+      */
     struct WheelEncoderConfig {
         int gpio_pin_;
         int resolution_;
@@ -32,7 +40,12 @@ class WheelEncodersNode : public rclcpp::Node {
         std::string orientation_;
         std::string topic_name_;
     };
-    WheelEncodersNode(std::vector<WheelEncoderConfig> encoderConfigs)
+
+    /*!
+      * @brief Default constructor.
+      * @param encoderConfigs const Reference to the std::vector of WheelEncoderConfig.
+      */
+    WheelEncodersNode(const std::vector<WheelEncoderConfig>& encoderConfigs)
     : Node("WheelEncodersNode"), encoderConfigs_(encoderConfigs)
     {
       int index = 0;
