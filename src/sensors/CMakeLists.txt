@@ -41,6 +41,9 @@ endif()
 add_executable(wheel_encoder_test src/wheel_encoder/wheel_encoder_publisher.cc)
 ament_target_dependencies(wheel_encoder_test rclcpp std_msgs JetsonGPIO)
 
+add_executable(motor_test src/motor_controller/motor_controller.cc)
+ament_target_dependencies(wheel_encoder_test rclcpp std_msgs JetsonGPIO)
+
 install(TARGETS
   wheel_encoder_test
   DESTINATION lib/${PROJECT_NAME})
