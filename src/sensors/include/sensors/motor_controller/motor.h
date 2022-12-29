@@ -50,7 +50,6 @@ int in2_pin_;
 
 class PWMMotorDirectionController: public AbstractMotorDirectionController {
 public:
-  std::string test = "PWMMotorDirectionController";
   std::map<MotorDirection, std::pair<HIGH_LOW, HIGH_LOW>> _DIRECTION_TO_SIGNALS = {
     {MotorDirection::RELEASE, std::make_pair(HIGH_LOW::LOW, HIGH_LOW::HIGH)},
     {MotorDirection::FORWARD, std::make_pair(HIGH_LOW::HIGH, HIGH_LOW::LOW)},

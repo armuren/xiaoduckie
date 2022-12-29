@@ -10,7 +10,6 @@ HAT::HAT(int i2c_address, double frequency)
 frequency_(frequency)
 {
   pwm_ = std::make_shared<PWM>(i2c_address_);
-  std::cout << "HAT:  address of pwm_ " << pwm_ << std::endl;
   pwm_.get()->setPWMFreq(frequency_);
 }
 

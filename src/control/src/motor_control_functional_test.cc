@@ -6,9 +6,7 @@ int main() {
   auto motor_driver = xiaoduckie::control::Driver();
   motor_driver.velocity_left_ = 0.5;
   motor_driver.velocity_right_ = 0.5;
-  std::cout << "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" << std::endl;
   motor_driver.PWMUpdate();
-  std::cout << "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" << std::endl;
   std::this_thread::sleep_for (std::chrono::seconds(3));
   motor_driver.velocity_left_ = 0;
   motor_driver.velocity_right_ = 0;

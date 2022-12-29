@@ -32,7 +32,6 @@ void I2C::handle_error(std::string& err_msg) {
 }
 
 int I2C::put_address_on_bus() {
-  std::cout << "I2C: Address " << printf("0x%02X", device_address_) << std::endl;
   int res = ioctl(bus_fd_, I2C_SLAVE, device_address_);
   if (res == -1) {
     std::string error_msg = std::string("I2C: ioctl: Error setting device address " + device_address_);

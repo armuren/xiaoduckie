@@ -27,7 +27,7 @@ private:
   int bus_fd_;
   int device_address_;
   std::string device_name_;
-  bool debug = true;
+  bool debug = false;
 };
 
   }

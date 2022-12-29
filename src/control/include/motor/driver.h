@@ -50,10 +50,6 @@ public:
     int pwm_left = getPWMValue(velocity_left_, LEFT_MOTOR_MIN_PWM, LEFT_MOTOR_MAX_PWM);
     int pwm_right = getPWMValue(velocity_right_, RIGHT_MOTOR_MIN_PWM, RIGHT_MOTOR_MAX_PWM);
 
-    std::cout << "Motor Driver: pwm values:  Left = " 
-      << pwm_left << " - Right = " 
-      << pwm_right << std::endl;
-
     sensors::MotorDirection left_motor_mode = sensors::MotorDirection::RELEASE;
     sensors::MotorDirection right_motor_mode = sensors::MotorDirection::RELEASE;
 
@@ -72,8 +68,6 @@ public:
     }
 
     left_motor_.get()->set(left_motor_mode, pwm_left);
-    std::cout << "SOME HOW RIGHT MOTOR IS WRONG NOW " << std::endl; 
-    std::cout << right_motor_ << std::endl; 
     right_motor_.get()->set(right_motor_mode, pwm_right);
 
   }
