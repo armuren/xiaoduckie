@@ -115,24 +115,7 @@ class WheelEncoderSensor {
       * @param gpio The GPIO pin to which the encoder is connected.
       * @param callback The external callback.
       */
-    bool Init(int gpio, std::function<void(int)> callback) {
-      gpio_pin_ = gpio;
-      *direction_ = DIRECTION::FORWARD;
-
-      EncoderCallback callback_(
-        "EncoderCallback",
-        ticks_,
-        std::move(callback),
-        direction_
-      );
-
-      GPIO::setmode(GPIO::BCM);
-      GPIO::setup(gpio_pin_, GPIO::IN);
-      GPIO::add_event_detect(gpio_pin_, GPIO::RISING, callback_);
-
-      initialized_ = true;
-      return true;
-    };
+    bool Init(int gpio, std::function<void(int)> callback);
   private:
     int gpio_pin_;
     bool initialized_ = false;

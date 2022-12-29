@@ -10,7 +10,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/int32.hpp"
 
-#include "wheel_encoder/wheel_encoder_sensor.h"
+#include "sensors/wheel_encoder/wheel_encoder_sensor.h"
 
 namespace xiaoduckie {
 namespace sensors {

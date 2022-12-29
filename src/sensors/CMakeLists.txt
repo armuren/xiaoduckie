@@ -16,15 +16,38 @@ find_package(std_msgs REQUIRED)
 
 find_package(JetsonGPIO REQUIRED)
 
-include_directories(include)
+include_directories(
+  include
+  ${colcon_INCLUDE_DIRS}
+)
 
-# add_library(wheel_encoder SHARED src/wheel_encoder/wheel_encoder_publisher.cc)
-# target_compile_definitions(wheel_encoder PRIVATE WAIT_SET_DLL)
-# ament_target_dependencies(wheel_encoder rclcpp rclcpp_components std_msgs)
-# rclcpp_components_register_node(
-#     wheel_encoder
-#     PLUGIN "WheelEncoder"
-#     EXECUTABLE wheel_encoder_publisher)
+add_library(
+  ${PROJECT_NAME} SHARED
+  src/hat/hat.cc
+  src/hat/i2c.cc
+  src/hat/pwm.cc
+  src/motor_controller/motor.cc
+  src/wheel_encoder/wheel_encoder_sensor.cc
+)
+
+target_include_directories(
+  ${PROJECT_NAME} PUBLIC
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+  "$<INSTALL_INTERFACE:include>"
+)
+
+target_link_libraries(${PROJECT_NAME} 
+  i2c
+)
+
+ament_target_dependencies(${PROJECT_NAME}
+  rclcpp
+  std_msgs
+  JetsonGPIO
+)
+
+ament_export_include_directories(include)
+ament_export_libraries(${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -38,14 +61,33 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-add_executable(wheel_encoder_test src/wheel_encoder/wheel_encoder_publisher.cc)
-ament_target_dependencies(wheel_encoder_test rclcpp std_msgs JetsonGPIO)
+# add_executable(wheel_encoder_test src/wheel_encoder/wheel_encoder_publisher.cc)
+# ament_target_dependencies(wheel_encoder_test rclcpp std_msgs JetsonGPIO)
 
-add_executable(motor_test src/motor_controller/motor_controller.cc)
-ament_target_dependencies(wheel_encoder_test rclcpp std_msgs JetsonGPIO)
+# add_executable(motor_test src/motor_controller/motor_controller.cc)
+# ament_target_dependencies(wheel_encoder_test rclcpp std_msgs JetsonGPIO)
 
-install(TARGETS
-  wheel_encoder_test
-  DESTINATION lib/${PROJECT_NAME})
+#=============
+# Install
+#=============
+
+install(
+  DIRECTORY include/
+  DESTINATION include
+)
+
+install(
+  TARGETS ${PROJECT_NAME}
+  EXPORT export_${PROJECT_NAME}
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
+  INCLUDES DESTINATION include
+)
+
+# install(
+#   TARGETS wheel_encoder_test
+#   DESTINATION lib/${PROJECT_NAME}
+# )
 
 ament_package()
