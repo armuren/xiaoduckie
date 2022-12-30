@@ -11,7 +11,8 @@
                 "/workspaces/xiaoduckie/src/control/include/**",
                 "/usr/include/**",
                 "${workspaceFolder}/src/control/include",
-                "${workspaceFolder}/src/sensors/include"
+                "${workspaceFolder}/src/sensors/include",
+                "${workspaceFolder}/build/xiaocar_msgs/rosidl_generator_cpp"
             ],
             "name": "ROS",
             "intelliSenseMode": "gcc-arm64",

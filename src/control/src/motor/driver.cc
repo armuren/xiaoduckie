@@ -18,6 +18,13 @@ Driver::Driver() {
 
 }
 
+void Driver::setLeftWheelVelocity(double velocity_left) {
+  velocity_left_ = velocity_left;
+}
+void Driver::setRightWheelVelocity(double velocity_right) {
+  velocity_right_ = velocity_right;
+}
+
 int Driver::getPWMValue(double velocity, double min_pwm, int max_pwm) {
   int pwm = 0;
   if (fabs(velocity) > SPEED_TOLERANCE) {

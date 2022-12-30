@@ -15,11 +15,56 @@ find_package(rclcpp_components REQUIRED)
 find_package(std_msgs REQUIRED)
 
 find_package(sensors REQUIRED)
+find_package(xiaocar_msgs REQUIRED)
 
 include_directories(
   include
   ${colcon_INCLUDE_DIRS}
 )
+
+add_library(
+  ${PROJECT_NAME} SHARED
+  src/motor/driver.cc
+)
+
+target_include_directories(
+  ${PROJECT_NAME} PUBLIC
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+  "$<INSTALL_INTERFACE:include>"
+)
+
+# target_link_libraries(${PROJECT_NAME} 
+#   i2c
+# )
+
+ament_target_dependencies(${PROJECT_NAME}
+  rclcpp
+  std_msgs
+  sensors
+  xiaocar_msgs
+)
+
+ament_export_include_directories(include)
+ament_export_libraries(${PROJECT_NAME})
+
+# create ament index resource which references the libraries in the binary dir
+# set(node_plugins "")
+
+# add_library(wheels_driver SHARED
+#   src/wheels_driver_node.cc)
+
+# target_compile_definitions(wheels_driver
+#   PRIVATE "COMPOSITION_BUILDING_DLL")
+
+# ament_target_dependencies(wheels_driver
+#   "rclcpp"
+#   "rclcpp_components"
+#   "std_msgs"
+#   "sensors"
+#   "xiaocar_msgs")
+
+# rclcpp_components_register_nodes(wheels_driver "xiaoduckie::control::WheelsDriverNode")
+# set(node_plugins "${node_plugins}xiaoduckie::control::WheelsDriverNode;$<TARGET_FILE:wheels_driver>\n")
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -33,13 +78,22 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-add_executable(motor_control_functional_test src/motor_control_functional_test.cc)
-ament_target_dependencies(motor_control_functional_test rclcpp std_msgs sensors)
+add_executable(
+  wheels_driver_node
+  src/motor/driver.cc
+  src/wheels_driver_node.cc)
+
+ament_target_dependencies(wheels_driver_node rclcpp std_msgs xiaocar_msgs sensors)
 
 install(
   TARGETS
-  motor_control_functional_test
-  DESTINATION lib/${PROJECT_NAME}
+  wheels_driver_node
+  DESTINATION lib/${PROJECT_NAME})
+
+# Install launch files.
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}/
 )
 
 ament_package()
