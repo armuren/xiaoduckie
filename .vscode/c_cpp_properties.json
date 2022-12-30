@@ -1,17 +1,24 @@
 {
     "configurations": [
         {
-            "name": "Linux",
+            "browse": {
+                "databaseFilename": "${default}",
+                "limitSymbolsToIncludedHeaders": false
+            },
             "includePath": [
-                "${workspaceFolder}/**",
-                "/opt/ros/foxy/include/**"
+                "/opt/ros/humble/include/**",
+                "/workspaces/xiaoduckie/src/sensors/include/**",
+                "/workspaces/xiaoduckie/src/control/include/**",
+                "/usr/include/**",
+                "${workspaceFolder}/src/control/include",
+                "${workspaceFolder}/src/sensors/include",
+                "${workspaceFolder}/build/xiaocar_msgs/rosidl_generator_cpp"
             ],
-            "defines": [],
+            "name": "ROS",
+            "intelliSenseMode": "gcc-arm64",
             "compilerPath": "/usr/bin/gcc",
-            "compileCommands": "${workspaceFolder}/build/compile_commands.json",
-            "cStandard": "c99",
-            "cppStandard": "c++14",
-            "intelliSenseMode": "linux-gcc-x64"
+            "cStandard": "gnu11",
+            "cppStandard": "c++14"
         }
     ],
     "version": 4
